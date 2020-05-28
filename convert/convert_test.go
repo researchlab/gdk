@@ -159,9 +159,9 @@ func TestMapToStruct(t *testing.T) {
 			"Height": 10,
 			"Name":   "mike",
 		}},
-		{expected: &Person{"jack", 1, 10}, in: map[string]interface{}{
-			"Age":    1,
-			"Height": 10,
+		{expected: &Person{"jack", 10, 102}, in: map[string]interface{}{
+			"Age":    10,
+			"Height": 102,
 			"Name":   "jack",
 		}},
 	}
