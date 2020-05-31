@@ -4,6 +4,7 @@ import (
 	"reflect"
 )
 
+// UniqueInt64 reports the UniqueInt64 slice
 func UniqueInt64(nums []int64) (ret []int64) {
 	if len(nums) == 0 {
 		return
@@ -20,6 +21,7 @@ func UniqueInt64(nums []int64) (ret []int64) {
 	return ret
 }
 
+// UniqueInt
 func UniqueInt(nums []int) (ret []int) {
 	if len(nums) == 0 {
 		return
@@ -34,6 +36,7 @@ func UniqueInt(nums []int) (ret []int) {
 	return ret
 }
 
+// UniqueString
 func UniqueString(strs []string) (ret []string) {
 	if len(strs) == 0 {
 		return
@@ -48,7 +51,7 @@ func UniqueString(strs []string) (ret []string) {
 	return ret
 }
 
-// unique slice
+// Unique  reports any type slice to Unique
 func Unique(data interface{}) bool {
 
 	dataVal := reflect.ValueOf(data)

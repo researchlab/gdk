@@ -17,10 +17,13 @@ import (
 //strconv.Atoi(s)
 //strconv.ParseInt(s,10,0)
 
+// ERR_NEED_NUMERIC
 var ERR_NEED_NUMERIC = errors.New("ToInt64 need numeric")
+
+// ERR_BYTES_INVALILD
 var ERR_BYTES_INVALILD = errors.New("BytesToFloat64 bytes invalid")
 
-// convert any numeric value to int64
+// ToInt64 convert any numeric value to int64
 func ToInt64(value interface{}) (d int64, err error) {
 	val := reflect.ValueOf(value)
 	switch value.(type) {
