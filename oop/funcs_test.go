@@ -30,6 +30,16 @@ func TestNewFuncs01(t *testing.T) {
 			}
 		}
 	}
+	// negative cases
+	if err := nfuncs.Bind("Add", nil); err == nil {
+		t.Fatal("Bind invalid")
+	}
+	if outputs, err := nfuncs.Call("unknown", []interface{}{}); err == nil {
+		t.Fatalf("Call invalid, outputs:%v", outputs)
+	}
+	if outputs, err := nfuncs.Call("Add", []interface{}{}); err == nil {
+		t.Fatalf("Call invalid, outputs:%v", outputs)
+	}
 }
 
 func Add(a, b int) int {

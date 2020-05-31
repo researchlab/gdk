@@ -122,7 +122,11 @@ func setField(obj interface{}, name string, value interface{}) error {
 	}
 
 	structFieldType := structFieldVal.Type()
+	if value == nil {
+		return nil
+	}
 	val := reflect.ValueOf(value)
+	fmt.Println("structFieldType:", structFieldType, "  val.type:", val.Type())
 	if structFieldType != val.Type() {
 		return errors.New("provided value type didn't match obj field type")
 	}

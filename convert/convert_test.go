@@ -13,6 +13,11 @@ func TestToInt64(t *testing.T) {
 	}{
 		{int8(15), 15, nil},
 		{15, 15, nil},
+		{uint(15), 15, nil},
+		{uint8(15), 15, nil},
+		{uint16(15), 15, nil},
+		{uint32(15), 15, nil},
+		{uint64(15), 15, nil},
 		{"one", 0, ERR_NEED_NUMERIC},
 	}
 	for _, test := range tests {
@@ -121,9 +126,16 @@ func TestFloatPrecision(t *testing.T) {
 }
 
 type Person struct {
-	Name   string `json:"name"`
-	Age    int    `json:"age"`
+	Name   string
+	Age    int
 	Height int
+}
+
+type Human struct {
+	name   string
+	Age    int
+	Height int
+	Score  *int
 }
 
 func TestStructToMap(t *testing.T) {
@@ -164,10 +176,42 @@ func TestMapToStruct(t *testing.T) {
 			"Height": 102,
 			"Name":   "jack",
 		}},
+		{expected: &Person{"mike", 0, 10}, in: map[string]interface{}{
+			"Age":    nil,
+			"Height": 10,
+			"Name":   "mike",
+		}},
 	}
 	for _, test := range tests {
 		if out, err := MapToStruct(test.in, &Person{}); err != nil || !reflect.DeepEqual(out, test.expected) {
 			t.Errorf("MapToStruct invalid, test:%v, out:%v, err:%v", test, out, err)
+		}
+	}
+	negativetests := []struct {
+		in       map[string]interface{}
+		data     interface{}
+		expected *Person
+	}{
+		{data: &Person{}, expected: nil, in: map[string]interface{}{
+			"Ages":   10,
+			"Height": 102,
+			"Address": map[string]interface{}{
+				"Address": "china",
+				"code":    00000,
+			},
+		}},
+		{data: &Human{}, expected: nil, in: map[string]interface{}{
+			"name":   "mike",
+			"Age":    10,
+			"Height": 102,
+		}},
+		{data: &Human{}, expected: nil, in: map[string]interface{}{
+			"Score": "string",
+		}},
+	}
+	for _, test := range negativetests {
+		if out, err := MapToStruct(test.in, test.data); err == nil {
+			t.Errorf("MapToStruct invalid, test:%v, out:%v", test, out)
 		}
 	}
 }
