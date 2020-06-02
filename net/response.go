@@ -3,12 +3,14 @@ package net
 import (
 	"compress/gzip"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"strings"
 )
 
 var hdrContentEncodingKey = http.CanonicalHeaderKey("Content-Encoding")
+var ERRNilResponse = errors.New("nil response")
 
 // Response is an object recorder executed request and its values.
 type Response struct {
@@ -27,6 +29,9 @@ type Response struct {
 // ResponseRecorder   is an object recorder the given http response
 func ResponseRecorder(resp *http.Response) (r *Response, err error) {
 	r = &Response{}
+	if resp == nil {
+		return r, ERRNilResponse
+	}
 	body := resp.Body
 
 	// check gzip
