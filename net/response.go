@@ -54,7 +54,6 @@ func ResponseRecorder(resp *http.Response) (r *Response, err error) {
 		headers[name] = values
 	}
 	r.header = http.Header(headers)
-
 	r.size = int64(len(r.body))
 	return
 }
@@ -68,13 +67,13 @@ func (r *Response) Body() []byte {
 }
 
 // Status method returns the HTTP status string for the executed request.
-//	Example: 200 OK
+// Example: 200 OK
 func (r *Response) Status() string {
 	return r.status
 }
 
 // StatusCode method returns the HTTP status code for the executed request.
-//	Example: 200
+// Example: 200
 func (r *Response) StatusCode() int {
 	return r.statusCode
 }
@@ -84,7 +83,6 @@ func (r *Response) Header() http.Header {
 	if r.header == nil {
 		return http.Header{}
 	}
-
 	return r.header
 }
 
@@ -93,7 +91,6 @@ func (r *Response) String() string {
 	if r.body == nil {
 		return ""
 	}
-
 	return strings.TrimSpace(string(r.body))
 }
 
