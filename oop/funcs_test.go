@@ -13,7 +13,7 @@ func TestNewFuncs(t *testing.T) {
 	}
 }
 
-func TestFuncs_Bind(t *testing.T) {
+func TestFuncsBind(t *testing.T) {
 	type fields struct {
 		name string
 		fn   interface{}
@@ -36,7 +36,7 @@ func TestFuncs_Bind(t *testing.T) {
 	}
 }
 
-func TestFuncs_Call(t *testing.T) {
+func TestFuncsCall(t *testing.T) {
 	type fields struct {
 		name   string
 		params []interface{}
@@ -79,7 +79,7 @@ func (p Person) ShowAge() int {
 	return p.Age
 }
 
-func TestFuncs_Call02(t *testing.T) {
+func TestFuncsCall02(t *testing.T) {
 	persons := []Person{
 		{"mike", 10},
 		{"mike", 20},

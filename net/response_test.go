@@ -34,6 +34,7 @@ func gzipBad(a []byte) []byte {
 	gz.Flush()
 	return b.Bytes()
 }
+
 func httpResponse(statusCode int, headers map[string]string, body []byte) *http.Response {
 	header := http.Header{}
 	for name, value := range headers {
@@ -55,6 +56,7 @@ func httpResponse(statusCode int, headers map[string]string, body []byte) *http.
 		TLS:              nil,
 	}
 }
+
 func TestResponseRecorder(t *testing.T) {
 	type args struct {
 		resp *http.Response
@@ -116,7 +118,7 @@ func TestResponseRecorder(t *testing.T) {
 	}
 }
 
-func TestResponse_Body(t *testing.T) {
+func TestResponseBody(t *testing.T) {
 	type fields struct {
 		body []byte
 	}
@@ -140,7 +142,7 @@ func TestResponse_Body(t *testing.T) {
 	}
 }
 
-func TestResponse_Status(t *testing.T) {
+func TestResponseStatus(t *testing.T) {
 	type fields struct {
 		status string
 	}
@@ -164,7 +166,7 @@ func TestResponse_Status(t *testing.T) {
 	}
 }
 
-func TestResponse_StatusCode(t *testing.T) {
+func TestResponseStatusCode(t *testing.T) {
 	type fields struct {
 		statusCode int
 	}
@@ -188,7 +190,7 @@ func TestResponse_StatusCode(t *testing.T) {
 	}
 }
 
-func TestResponse_Header(t *testing.T) {
+func TestResponseHeader(t *testing.T) {
 	type fields struct {
 		header http.Header
 	}
@@ -212,7 +214,7 @@ func TestResponse_Header(t *testing.T) {
 	}
 }
 
-func TestResponse_String(t *testing.T) {
+func TestResponseString(t *testing.T) {
 	type fields struct {
 		body []byte
 	}
@@ -236,7 +238,7 @@ func TestResponse_String(t *testing.T) {
 	}
 }
 
-func TestResponse_Size(t *testing.T) {
+func TestResponseSize(t *testing.T) {
 	type fields struct {
 		size int64
 	}
@@ -260,7 +262,7 @@ func TestResponse_Size(t *testing.T) {
 	}
 }
 
-func TestResponse_Unmarshal(t *testing.T) {
+func TestResponseUnmarshal(t *testing.T) {
 	type fields struct {
 		body []byte
 	}
