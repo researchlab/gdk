@@ -14,22 +14,22 @@ func TestNewFuncs(t *testing.T) {
 }
 
 func TestFuncsBind(t *testing.T) {
-	type fields struct {
+	type args struct {
 		name string
 		fn   interface{}
 	}
 	tests := []struct {
 		name    string
-		fields  fields
+		args    args
 		wantErr bool
 	}{
-		{name: "bind success", fields: fields{name: "Add", fn: func(a, b int) int { return a + b }}, wantErr: false},
-		{name: "panics if the fn type's Kind is not Func", fields: fields{name: "nil", fn: nil}, wantErr: true},
+		{name: "bind success", args: args{name: "Add", fn: func(a, b int) int { return a + b }}, wantErr: false},
+		{name: "panics if the fn type's Kind is not Func", args: args{name: "nil", fn: nil}, wantErr: true},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			f := NewFuncs()
-			if err := f.Bind(test.fields.name, test.fields.fn); (err != nil) != test.wantErr {
+			if err := f.Bind(test.args.name, test.args.fn); (err != nil) != test.wantErr {
 				t.Errorf("f.Bind() err =%v, wantErr:%v", err, test.wantErr)
 			}
 		})
@@ -37,25 +37,25 @@ func TestFuncsBind(t *testing.T) {
 }
 
 func TestFuncsCall(t *testing.T) {
-	type fields struct {
+	type args struct {
 		name   string
 		params []interface{}
 	}
 	tests := []struct {
 		name    string
-		fields  fields
+		args    args
 		wantR   []reflect.Value
 		wantErr bool
 	}{
-		{name: "call success", fields: fields{name: "Add", params: []interface{}{1, 2}}, wantR: []reflect.Value{reflect.ValueOf(3)}, wantErr: false},
-		{name: "function name doesn't exist", fields: fields{name: "Sum"}, wantErr: true},
-		{name: "not enough params", fields: fields{name: "Add", params: []interface{}{1}}, wantErr: true},
+		{name: "call success", args: args{name: "Add", params: []interface{}{1, 2}}, wantR: []reflect.Value{reflect.ValueOf(3)}, wantErr: false},
+		{name: "function name doesn't exist", args: args{name: "Sum"}, wantErr: true},
+		{name: "not enough params", args: args{name: "Add", params: []interface{}{1}}, wantErr: true},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			f := NewFuncs()
 			f.Bind("Add", func(a, b int) int { return a + b })
-			gotR, err := f.Call(test.fields.name, test.fields.params...)
+			gotR, err := f.Call(test.args.name, test.args.params...)
 			if (err != nil) != test.wantErr {
 				t.Errorf("f.Call() err=%v, wantErr:%v", err, test.wantErr)
 			}
