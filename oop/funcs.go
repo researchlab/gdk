@@ -10,21 +10,16 @@ var (
 	ErrParamsNotAdapted = errors.New("The number of params is not adapted.")
 )
 
-type funcs map[string]reflect.Value
+// Funcs bundle of functions
+type Funcs map[string]reflect.Value
 
 // NewFuncs function maps
 func NewFuncs() Funcs {
-	return make(funcs, 0)
-}
-
-// Funcs Funcs interface
-type Funcs interface {
-	Bind(name string, fn interface{}) (err error)
-	Call(name string, params ...interface{}) (result []reflect.Value, err error)
+	return make(Funcs, 0)
 }
 
 // Bind the function with the given function name
-func (f funcs) Bind(name string, fn interface{}) (err error) {
+func (f Funcs) Bind(name string, fn interface{}) (err error) {
 	defer func() {
 		if e := recover(); e != nil {
 			err = errors.New(name + " is not callable.")
@@ -37,7 +32,7 @@ func (f funcs) Bind(name string, fn interface{}) (err error) {
 }
 
 // Call the function with the given name and params
-func (f funcs) Call(name string, params ...interface{}) (result []reflect.Value, err error) {
+func (f Funcs) Call(name string, params ...interface{}) (result []reflect.Value, err error) {
 	if _, ok := f[name]; !ok {
 		err = errors.New(name + " does not exist.")
 		return
