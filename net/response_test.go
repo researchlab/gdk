@@ -197,7 +197,6 @@ func TestResponse_Header(t *testing.T) {
 		fields fields
 		want   http.Header
 	}{
-		// TODO: Add test cases.
 		{name: "nil header", fields: fields{header: nil}, want: http.Header{}},
 		{name: "positive header", fields: fields{header: http.Header(map[string][]string{"name": []string{"mike"}})}, want: map[string][]string{"name": []string{"mike"}}},
 	}
