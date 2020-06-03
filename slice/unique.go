@@ -17,8 +17,6 @@ func UniqueInt64(nums []int64) (ret []int64) {
 		}
 	}
 	return ret
-
-	return ret
 }
 
 // UniqueInt
