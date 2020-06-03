@@ -12,9 +12,8 @@ func TestContains(t *testing.T) {
 		args args
 		want bool
 	}{
-		{name: "positive case 01", args: args{sl: []interface{}{"mike", "jack"}, v: "mike"}, want: true},
-		{name: "positive case 02", args: args{sl: []interface{}{"mike", "jack"}, v: "jack"}, want: true},
-		{name: "negative case", args: args{sl: []interface{}{"mike", "jack"}, v: "tom"}, want: false},
+		{name: "sl contains v", args: args{sl: []interface{}{"mike", "jack"}, v: "mike"}, want: true},
+		{name: "sl not contains v", args: args{sl: []interface{}{"mike", "jack"}, v: "tom"}, want: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -35,8 +34,8 @@ func TestContainsInt(t *testing.T) {
 		args args
 		want bool
 	}{
-		{name: "positive case", args: args{sl: []int{1, 2}, v: 1}, want: true},
-		{name: "negative case", args: args{sl: []int{1, 2}, v: 0}, want: false},
+		{name: "sl contains the int v", args: args{sl: []int{1, 2}, v: 1}, want: true},
+		{name: "sl doesn't contains the int v", args: args{sl: []int{1, 2}, v: 0}, want: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -57,8 +56,8 @@ func TestContainsInt64(t *testing.T) {
 		args args
 		want bool
 	}{
-		{name: "positive case", args: args{sl: []int64{1, 2}, v: 1}, want: true},
-		{name: "negative case", args: args{sl: []int64{1, 2}, v: 0}, want: false},
+		{name: "sl contains the int64 v", args: args{sl: []int64{1, 2}, v: 1}, want: true},
+		{name: "sl doesn't contains the int64 v", args: args{sl: []int64{1, 2}, v: 0}, want: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -79,8 +78,8 @@ func TestContainsString(t *testing.T) {
 		args args
 		want bool
 	}{
-		{name: "positive case", args: args{sl: []string{"mike", "jack"}, v: "mike"}, want: true},
-		{name: "negative case", args: args{sl: []string{"mike", "jack"}, v: "tom"}, want: false},
+		{name: "sl contains the string v", args: args{sl: []string{"mike", "jack"}, v: "mike"}, want: true},
+		{name: "sl doesn't contains the string v", args: args{sl: []string{"mike", "jack"}, v: "tom"}, want: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
