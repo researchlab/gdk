@@ -1,4 +1,4 @@
-package file
+package filex
 
 import (
 	"fmt"
@@ -48,7 +48,7 @@ func InsureDir(fp string) error {
 	return os.MkdirAll(fp, os.ModePerm)
 }
 
-//EnsureDirRW ensure the datadir and make sure it's rw-able
+// EnsureDirRW ensure the datadir and make sure it's rw-able
 func EnsureDirRW(dataDir string) error {
 	err := InsureDir(dataDir)
 	if err != nil {
