@@ -1,4 +1,4 @@
-package convert
+package gdk
 
 import (
 	"encoding/binary"
