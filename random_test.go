@@ -1,4 +1,4 @@
-package generator
+package gdk
 
 import (
 	"testing"

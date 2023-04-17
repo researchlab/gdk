@@ -1,11 +1,11 @@
-package generator
+package gdk
 
 import (
 	"math/rand"
 	"time"
 )
 
-//  RandomInts 生成count个[start,end)结束的不重复的随机数
+// RandomInts 生成count个[start,end)结束的不重复的随机数
 func RandomInts(start int, end int, count int) []int {
 	//范围检查
 	if end < start || (end-start) < count {
