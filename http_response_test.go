@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-//  named-return, to avoid side effects of defer opt
+// named-return, to avoid side effects of defer opt
 func gzipFast(a []byte) (b bytes.Buffer) {
 
 	gz := gzip.NewWriter(&b)
@@ -23,7 +23,7 @@ func gzipFast(a []byte) (b bytes.Buffer) {
 	return b
 }
 
-//  badgzip
+// badgzip
 func gzipBad(a []byte) []byte {
 	var b bytes.Buffer
 	gz := gzip.NewWriter(&b)
