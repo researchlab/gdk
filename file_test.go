@@ -1,4 +1,4 @@
-package filex
+package gdk
 
 import (
 	"fmt"

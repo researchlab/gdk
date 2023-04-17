@@ -1,4 +1,4 @@
-package filex
+package gdk
 
 import (
 	"fmt"
@@ -189,7 +189,6 @@ func FilesUnder(dirPath string) ([]string, error) {
 // SearchFileWithAffix search file under dirPath and meet the followinng conditions
 // match prefix and suffix
 // prefix and suffix must been set and not be empty
-
 func SearchFileWithAffix(dirPath, prefix, suffix string) (fullPath string, exist bool) {
 	if !IsExist(dirPath) {
 		return "", false
