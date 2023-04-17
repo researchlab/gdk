@@ -1,4 +1,4 @@
-package net
+package gdk
 
 import (
 	"compress/gzip"
