@@ -66,21 +66,21 @@ func TestFuncsCall(t *testing.T) {
 	}
 }
 
-type Person struct {
+type People struct {
 	Name string `json:"name"`
 	Age  int    `json:"age"`
 }
 
-func (p Person) ShowName() string {
+func (p People) ShowName() string {
 	return p.Name
 }
 
-func (p Person) ShowAge() int {
+func (p People) ShowAge() int {
 	return p.Age
 }
 
 func TestFuncsCall02(t *testing.T) {
-	persons := []Person{
+	persons := []People{
 		{"mike", 10},
 		{"mike", 20},
 		{"jack", 10},
