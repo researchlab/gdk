@@ -4,7 +4,7 @@ gdk 结构设计规则
 
 - 工具函数
 
-一律具名具体作用如 DeepCopyForMap(T interface{})T , 引用示例如 gdk.DeepCopyForMap() 
+一律具体命名名如 DeepCopyForMap(T interface{})T , 引用示例如 gdk.DeepCopyForMap() 
 
 - 结构体变量
 
