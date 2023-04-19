@@ -5,40 +5,40 @@ import (
 	"testing"
 )
 
-func TestContains(t *testing.T) {
+func TestArrayContains(t *testing.T) {
 	R := func(t *testing.T, got, want bool) {
 		if got != want {
-			t.Errorf("Contains()=%v, want %v", got, want)
+			t.Errorf("ArrayContains()=%v, want %v", got, want)
 		}
 	}
-	t.Run("String Contains true", func(t *testing.T) {
+	t.Run("String ArrayContains true", func(t *testing.T) {
 		R(t,
-			Contains([]string{"mike", "jack"}, "mike"), // got
+			ArrayContains([]string{"mike", "jack"}, "mike"), // got
 			true, // want
 		)
 	})
-	t.Run("String Contains false", func(t *testing.T) { R(t, Contains([]string{"mike", "jack"}, "hello"), false) })
-	t.Run("int Contains true", func(t *testing.T) {
+	t.Run("String ArrayContains false", func(t *testing.T) { R(t, ArrayContains([]string{"mike", "jack"}, "hello"), false) })
+	t.Run("int ArrayContains true", func(t *testing.T) {
 		R(t,
-			Contains([]int{1, 2}, 1), // got
-			true,                     // want
+			ArrayContains([]int{1, 2}, 1), // got
+			true,                          // want
 		)
 	})
-	t.Run("int Contains false", func(t *testing.T) {
+	t.Run("int ArrayContains false", func(t *testing.T) {
 		R(t,
-			Contains([]int{1, 2}, 3), // got
-			false,                    // want
+			ArrayContains([]int{1, 2}, 3), // got
+			false,                         // want
 		)
 	})
-	t.Run("float64 Contains true", func(t *testing.T) {
+	t.Run("float64 ArrayContains true", func(t *testing.T) {
 		R(t,
-			Contains([]float64{1.1, 2.0}, 1.1), // got
-			true,                               // want
+			ArrayContains([]float64{1.1, 2.0}, 1.1), // got
+			true,                                    // want
 		)
 	})
-	t.Run("int Contains false", func(t *testing.T) {
+	t.Run("int ArrayContains false", func(t *testing.T) {
 		R(t,
-			Contains[float64]([]float64{1, 2.2}, 3.0), // got
+			ArrayContains[float64]([]float64{1, 2.2}, 3.0), // got
 			false, // want
 		)
 	})

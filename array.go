@@ -1,7 +1,7 @@
 package gdk
 
-// Contains return true if this array contains the specified element.
-func Contains[E string | int64 | int | float64](data []E, key E) bool {
+// ArrayContains return true if this array contains the specified element.
+func ArrayContains[E string | int64 | int | float64](data []E, key E) bool {
 	if len(data) == 0 {
 		return false
 	}
