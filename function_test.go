@@ -6,14 +6,14 @@ import (
 	"testing"
 )
 
-func TestNewFuncs(t *testing.T) {
-	want := make(Funcs, 0)
-	if f := NewFuncs(); !reflect.DeepEqual(f, want) {
-		t.Fatalf("NewFuncs() = %v, want:%v", f, want)
+func TestNewFunctions(t *testing.T) {
+	want := make(Functions, 0)
+	if f := NewFunctions(); !reflect.DeepEqual(f, want) {
+		t.Fatalf("NewFunctions() = %v, want:%v", f, want)
 	}
 }
 
-func TestFuncsBind(t *testing.T) {
+func TestFunctionsBind(t *testing.T) {
 	type args struct {
 		name string
 		fn   interface{}
@@ -28,7 +28,7 @@ func TestFuncsBind(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			f := NewFuncs()
+			f := NewFunctions()
 			if err := f.Bind(test.args.name, test.args.fn); (err != nil) != test.wantErr {
 				t.Errorf("f.Bind() err =%v, wantErr:%v", err, test.wantErr)
 			}
@@ -36,7 +36,7 @@ func TestFuncsBind(t *testing.T) {
 	}
 }
 
-func TestFuncsCall(t *testing.T) {
+func TestFunctionsCall(t *testing.T) {
 	type args struct {
 		name   string
 		params []interface{}
@@ -53,7 +53,7 @@ func TestFuncsCall(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			f := NewFuncs()
+			f := NewFunctions()
 			f.Bind("Add", func(a, b int) int { return a + b })
 			gotR, err := f.Call(test.args.name, test.args.params...)
 			if (err != nil) != test.wantErr {
@@ -79,13 +79,13 @@ func (p People) ShowAge() int {
 	return p.Age
 }
 
-func TestFuncsCall02(t *testing.T) {
+func TestFunctionsCall02(t *testing.T) {
 	persons := []People{
 		{"mike", 10},
 		{"mike", 20},
 		{"jack", 10},
 	}
-	nfuncs := NewFuncs()
+	nfuncs := NewFunctions()
 	for _, person := range persons {
 		nfuncs.Bind("name", person.ShowName)
 		nfuncs.Bind("age", person.ShowAge)
