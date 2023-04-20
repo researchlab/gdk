@@ -149,3 +149,29 @@ func TestArrayUnique(t *testing.T) {
 		}
 	})
 }
+
+func TestArrayMax(t *testing.T) {
+	t.Run("max float64", func(t *testing.T) {
+		if got := ArrayMax(1.1, 2.1, 2.2, 2.3); got != 2.3 {
+			t.Errorf("got %v, want 2.3", got)
+		}
+	})
+	t.Run("max array", func(t *testing.T) {
+		if got := ArrayMax([]int{1, 2, 3, 0}...); got != 3 {
+			t.Errorf("got %v, want 3", got)
+		}
+	})
+}
+
+func TestArrayMin(t *testing.T) {
+	t.Run("min float64", func(t *testing.T) {
+		if got := ArrayMin(1.1, 2.1, 2.2, 2.3); got != 1.1 {
+			t.Errorf("got %v, want 1.1", got)
+		}
+	})
+	t.Run("min array", func(t *testing.T) {
+		if got := ArrayMin([]int{1, 2, 3, 0}...); got != 0 {
+			t.Errorf("got %v, want 0", got)
+		}
+	})
+}

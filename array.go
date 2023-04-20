@@ -1,12 +1,12 @@
 package gdk
 
 // ArrayContains return true if this array contains the specified element.
-func ArrayContains[E string | int64 | int | float64](data []E, key E) bool {
-	if len(data) == 0 {
+func ArrayContains[E string | int64 | int | float64](array []E, key E) bool {
+	if len(array) == 0 {
 		return false
 	}
-	for i := 0; i < len(data); i++ {
-		if data[i] == key {
+	for i := 0; i < len(array); i++ {
+		if array[i] == key {
 			return true
 		}
 	}
@@ -14,18 +14,18 @@ func ArrayContains[E string | int64 | int | float64](data []E, key E) bool {
 }
 
 // ArrayMerge  merge two or more arrays into a new array
-func ArrayMerge[E string | int64 | int](a, b []E, c ...[]E) (data []E) {
-	data = append(a, b...)
-	for _, v := range c {
-		data = append(data, v...)
+func ArrayMerge[E string | int64 | int](arraya, arrayb []E, arrays ...[]E) (array []E) {
+	array = append(arraya, arrayb...)
+	for _, v := range arrays {
+		array = append(array, v...)
 	}
-	return data
+	return array
 }
 
 // ArraySum  sum of the given array
-func ArraySum[E int64 | int | float64](data []E) (sum E) {
-	for i := 0; i < len(data); i++ {
-		sum += data[i]
+func ArraySum[E int64 | int | float64](array []E) (sum E) {
+	for i := 0; i < len(array); i++ {
+		sum += array[i]
 	}
 	return sum
 }
@@ -41,4 +41,34 @@ func ArrayUnique[E int64 | int | string](in []E) (out []E) {
 		}
 	}
 	return out
+}
+
+// ArrayMax return the max one
+func ArrayMax[E Ordered](array ...E) E {
+	if len(array) < 1 {
+		panic("target 'array' cannot be empty.")
+	}
+	// Finds and returns min
+	max := array[0]
+	for i := 1; i < len(array); i++ {
+		if array[i] > max {
+			max = array[i]
+		}
+	}
+	return max
+}
+
+// ArrayMin return the smaller one
+func ArrayMin[E Ordered](array ...E) E {
+	if len(array) < 1 {
+		panic("target 'array' cannot be empty.")
+	}
+	// Finds and returns min
+	min := array[0]
+	for i := 1; i < len(array); i++ {
+		if array[i] < min {
+			min = array[i]
+		}
+	}
+	return min
 }
