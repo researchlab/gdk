@@ -1,10 +1,10 @@
 gdk 结构设计规则
 
-- 统一访问前缀为 gdk.xxxx 
+**统一访问前缀为 gdk.xxxx**
 
 - 工具函数
 
-一律具体命名名如 DeepCopyForMap(T interface{})T , 引用示例如 gdk.DeepCopyForMap() 
+一律具体命名, 如 DeepCopyForMap(T interface{})T , 引用示例如 gdk.DeepCopyForMap() 
 
 - 结构体变量
 
@@ -32,18 +32,17 @@ heap := gdk.NewHeap()  // 然后再由 heap.Push()
 首先通过gdk.NewMysql()得到 mysqlObj 然后 mysqlObj.NewConn() 等操作在继续， 也可以链式 gdk.NewMysql().NewConn()
 
 
-关于测试
+- 关于测试
 
 xx_test.go 里面包含 unit_test, benmark test 
+
 xx_example_test.go 包含 示例测试
 
-关于文档 
+- 关于文档 
 
-- 便于生成golang标准文档, 必要时可以通过godoc 架设本地文档服务，快速搜索查看对应的功能和用法
+    - 便于生成golang标准文档, 必要时可以通过godoc 架设本地文档服务，快速搜索查看对应的功能和用法
 
-- 便于生成md文档
-
-
+    - 便于生成md文档
 
 
 ```shell
