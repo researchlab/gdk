@@ -34,7 +34,7 @@ heap := gdk.NewHeap()  // 然后再由 heap.Push()
 
 - 关于测试
 
-xx_test.go 里面包含 unit_test, benmark test 
+xx_test.go 里面包含 unit_test, benchmark test
 
 xx_example_test.go 包含 示例测试
 
