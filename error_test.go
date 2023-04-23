@@ -178,12 +178,21 @@ func TestDetail(t *testing.T) {
 		d := err.Detail()
 		var e ErrDetail
 		ee := json.Unmarshal([]byte(d), &e)
+
+		//decoder := json.NewDecoder(bytes.NewReader([]byte(d)))
+		//// 未设置UseNumber, 长整型会丢失精度
+		//decoder.UseNumber()
+		//ee := decoder.Decode(&e)
 		if ee != nil {
 			t.Errorf("json.Unmarshal error %v", ee)
 		}
-		if e.Code != code {
+		if c, ok := e.Code.(float64); !ok {
+			t.Log("type:", reflect.TypeOf(e.Code))
+			t.Errorf("got %v, want %v, ok %v", e.Code, code, ok)
+		} else if int(c) != code {
 			t.Errorf("got %v, want %v", e.Code, code)
 		}
+
 		if e.Tag != tag {
 			t.Errorf("got %v, want %v", e.Tag, tag)
 		}

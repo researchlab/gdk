@@ -8,22 +8,31 @@ import (
 )
 
 type Err interface {
-	Is(int) bool
+	Is(any) bool
 	WithTag(string) Err
 	WithFields(map[string]interface{}) Err
-	WithCode(int) Err
+	WithCode(any) Err
 	Error() string
 	Export() ErrDetail
 	Detail() string
 }
 
 var (
-	globalTag    string
-	globalFields map[string]interface{}
+	globalTag            string
+	globalFields         map[string]interface{}
+	globalErrorTemplates map[any]string
 )
 
 func init() {
 	globalFields = make(map[string]interface{})
+	globalErrorTemplates = make(map[any]string)
+}
+
+// SetGlobalErrorTemplates cache error templates
+func SetGlobalErrorTemplates(templates map[any]string) {
+	for k, v := range templates {
+		globalErrorTemplates[k] = v
+	}
 }
 
 // SetGlobalTag global tag
@@ -42,7 +51,7 @@ func SetGlobalFields(fields map[string]interface{}) {
 type err struct {
 	chains []string
 	tag    string
-	code   int
+	code   any
 	fields map[string]interface{}
 	e      error
 }
@@ -54,7 +63,7 @@ type ErrDetail struct {
 	Tag          string                 `json:"Tag,omitempty"`
 	GlobalFields map[string]interface{} `json:"GlobalFields,omitempty"`
 	Fields       map[string]interface{} `json:"Fields,omitempty"`
-	Code         int                    `json:"Code,omitempty"`
+	Code         any                    `json:"Code,omitempty"`
 	E            string                 `json:"Error,omitempty"`
 	e            error                  `json:"-"`
 }
@@ -92,7 +101,7 @@ func (e *err) Detail() string {
 }
 
 // Is compare two error code , return true if equals
-func (e *err) Is(code int) bool {
+func (e *err) Is(code any) bool {
 	return e.code == code
 }
 
@@ -111,7 +120,7 @@ func (e *err) WithFields(fields map[string]interface{}) Err {
 }
 
 // WithCode  error code
-func (e *err) WithCode(code int) Err {
+func (e *err) WithCode(code any) Err {
 	e.code = code
 	return e
 }
@@ -130,10 +139,32 @@ func ErrorCause(e error) Err {
 	}
 }
 
+// Errorf new error with format
 func Errorf(format string, a ...any) Err {
 	return &err{
 		chains: []string{callerName()},
 		e:      fmt.Errorf(format, a...),
+		fields: make(map[string]interface{}),
+	}
+}
+
+// ErrorT new error by error code and error template
+func ErrorT(code any, a ...any) Err {
+	format, ok := globalErrorTemplates[code]
+	var e2 error
+	if ok {
+		e2 = fmt.Errorf(format, a...)
+	} else {
+		emsg := ""
+		for _, v := range a {
+			emsg += fmt.Sprintf("%+v ", v)
+		}
+		e2 = fmt.Errorf("%s", emsg)
+	}
+	return &err{
+		chains: []string{callerName()},
+		e:      e2,
+		code:   code,
 		fields: make(map[string]interface{}),
 	}
 }
