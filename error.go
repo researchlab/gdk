@@ -2,6 +2,7 @@ package gdk
 
 import (
 	"encoding/json"
+	"fmt"
 	"runtime"
 	"strings"
 )
@@ -125,6 +126,14 @@ func ErrorCause(e error) Err {
 	return &err{
 		chains: []string{callerName()},
 		e:      e,
+		fields: make(map[string]interface{}),
+	}
+}
+
+func Errorf(format string, a ...any) Err {
+	return &err{
+		chains: []string{callerName()},
+		e:      fmt.Errorf(format, a...),
 		fields: make(map[string]interface{}),
 	}
 }

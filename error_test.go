@@ -197,3 +197,16 @@ func TestDetail(t *testing.T) {
 		}
 	})
 }
+
+func TestErrorf(t *testing.T) {
+	t.Run("Errorf", func(t *testing.T) {
+		const ERR_INVALID = 1000
+		err := Errorf("error").WithCode(ERR_INVALID)
+		if !err.Is(ERR_INVALID) {
+			t.Errorf("got %v, want 1000", err.Detail())
+		}
+		if err.Error() != "error" {
+			t.Errorf("got %v, want error", err.Error())
+		}
+	})
+}
