@@ -13,6 +13,7 @@ type Err interface {
 	WithFields(map[string]interface{}) Err
 	WithCode(any) Err
 	Error() string
+	ErrorText() string
 	Export() ErrDetail
 	Detail() string
 }
@@ -98,6 +99,33 @@ func (e *err) Export() ErrDetail {
 func (e *err) Detail() string {
 	b, _ := json.Marshal(e.Export())
 	return string(b)
+}
+
+// ErrorText textplain of the error
+func (e *err) ErrorText() string {
+	var text string
+	if e.chains != nil && len(e.chains) != 0 {
+		text = fmt.Sprintf("CallChains=%s, ", strings.Join(e.chains, "."))
+	}
+	if len(globalTag) != 0 {
+		text += fmt.Sprintf("GlobalTag=%s, ", globalTag)
+	}
+	if len(e.tag) != 0 {
+		text += fmt.Sprintf("Tag=%s, ", e.tag)
+	}
+	if globalFields != nil {
+		b, _ := json.Marshal(globalFields)
+		text += fmt.Sprintf("GlobalFields=%s, ", b)
+	}
+	if e.fields != nil {
+		b, _ := json.Marshal(e.fields)
+		text += fmt.Sprintf("Fields=%s, ", b)
+	}
+	text += fmt.Sprintf("Code=%+v, ", e.code)
+	if e.e != nil {
+		text += fmt.Sprintf("Error=%s ", e.e.Error())
+	}
+	return text
 }
 
 // Is compare two error code , return true if equals
