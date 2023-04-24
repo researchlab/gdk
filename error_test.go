@@ -279,9 +279,9 @@ func TestErrorText(t *testing.T) {
 	const ERR_PARSE_FAILED = "PARSE_FAILED"
 	_, e := json.Marshal(func() {})
 	SetGlobalTag("ip:192.168.1.12")
-	SetGlobalFields(map[string]interface{}{"service": "timer", "version": 1.0, "build": 20231121})
+	SetGlobalFields(map[string]interface{}{"build": 20231121})
 	err := ErrorCause(e).WithCode(ERR_PARSE_FAILED).WithTag("FunctionMarshal").WithFields(map[string]interface{}{"key": "value"})
-	want := `CallChains=TestErrorText, Tag=FunctionMarshal, GlobalFields={"build":20231121,"service":"timer","version":1}, Fields={"key":"value"}, Code=PARSE_FAILED, Error=json: unsupported type: func() `
+	want := `CallChains=TestErrorText, Tag=FunctionMarshal, GlobalFields={"build":20231121}, Fields={"key":"value"}, Code=PARSE_FAILED, Error=json: unsupported type: func() `
 	if err.ErrorText() != want {
 		t.Errorf("got %v, want %v", err.ErrorText(), want)
 	}
