@@ -219,3 +219,58 @@ func TestErrorf(t *testing.T) {
 		}
 	})
 }
+
+func TestErrorT(t *testing.T) {
+	t.Run("ErrorT with code[int]", func(t *testing.T) {
+		const (
+			ERR_UNMARSHAL_INVALID = 1000
+			ERR_PARAMS_INVALID    = 1001
+		)
+		errorTemplates := map[any]string{
+			ERR_UNMARSHAL_INVALID: "json.Unmarshal error %+v, inputs:%+v",
+			ERR_PARAMS_INVALID:    "%v invalid",
+		}
+		SetGlobalErrorTemplates(errorTemplates)
+		err := ErrorT(ERR_PARAMS_INVALID, "stu.address")
+		if !err.Is(ERR_PARAMS_INVALID) {
+			t.Errorf("got %v, want %v", err.Detail(), ERR_PARAMS_INVALID)
+		}
+		if err.Error() != "stu.address invalid" {
+			t.Errorf("got %v, want %v", err.Error(), "stu.address invalid")
+		}
+		err2 := ErrorT(ERR_UNMARSHAL_INVALID, fmt.Errorf("cannot covert object into golang struct"), "{\"address\":\"china\",\"code\":1000\"}")
+		if !err2.Is(ERR_UNMARSHAL_INVALID) {
+			t.Errorf("got %v, want %v", err.Detail(), ERR_UNMARSHAL_INVALID)
+		}
+		want := "json.Unmarshal error cannot covert object into golang struct, inputs:{\"address\":\"china\",\"code\":1000\"}"
+		if err2.Error() != want {
+			t.Errorf("got %v, want %v", err2.Error(), want)
+		}
+	})
+	t.Run("ErrorT with code[string]", func(t *testing.T) {
+		const (
+			ERR_UNMARSHAL_INVALID = "ERR_UNMARSHAL_INVALID"
+			ERR_PARAMS_INVALID    = "ERR_PARAMS_INVALID"
+		)
+		errorTemplates := map[any]string{
+			ERR_UNMARSHAL_INVALID: "json.Unmarshal error %+v, inputs:%+v",
+			ERR_PARAMS_INVALID:    "%v invalid",
+		}
+		SetGlobalErrorTemplates(errorTemplates)
+		err := ErrorT(ERR_PARAMS_INVALID, "stu.address")
+		if !err.Is(ERR_PARAMS_INVALID) {
+			t.Errorf("got %v, want %v", err.Detail(), ERR_PARAMS_INVALID)
+		}
+		if err.Error() != "stu.address invalid" {
+			t.Errorf("got %v, want %v", err.Error(), "stu.address invalid")
+		}
+		err2 := ErrorT(ERR_UNMARSHAL_INVALID, fmt.Errorf("cannot covert object into golang struct"), "{\"address\":\"china\",\"code\":1000\"}")
+		if !err2.Is(ERR_UNMARSHAL_INVALID) {
+			t.Errorf("got %v, want %v", err.Detail(), ERR_UNMARSHAL_INVALID)
+		}
+		want := "json.Unmarshal error cannot covert object into golang struct, inputs:{\"address\":\"china\",\"code\":1000\"}"
+		if err2.Error() != want {
+			t.Errorf("got %v, want %v", err2.Error(), want)
+		}
+	})
+}
