@@ -39,8 +39,8 @@ func SetGlobalErrorTemplates(templates map[any]string) {
 }
 
 // SetGlobalTag global tag
-func SetGlobalTag(globalTag string) {
-	globalTag = globalTag
+func SetGlobalTag(tag string) {
+	globalTag = tag
 }
 
 // SetGlobalFields global fields, set at most once
