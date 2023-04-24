@@ -13,9 +13,9 @@ type Err interface {
 	WithFields(map[string]interface{}) Err
 	WithCode(any) Err
 	Error() string
-	ErrorText() string
 	Export() ErrDetail
 	Detail() string
+	DetailText() string
 }
 
 var (
@@ -30,7 +30,9 @@ func init() {
 }
 
 // SetGlobalErrorTemplates cache error templates
+// 建议做多设置一次
 func SetGlobalErrorTemplates(templates map[any]string) {
+	globalErrorTemplates = make(map[any]string)
 	for k, v := range templates {
 		globalErrorTemplates[k] = v
 	}
@@ -41,8 +43,10 @@ func SetGlobalTag(globalTag string) {
 	globalTag = globalTag
 }
 
-// SetGlobalFields global fields
+// SetGlobalFields global fields, set at most once
+// 建议最多设置一次
 func SetGlobalFields(fields map[string]interface{}) {
+	globalFields = make(map[string]interface{})
 	for k, v := range fields {
 		globalFields[k] = v
 	}
@@ -101,8 +105,8 @@ func (e *err) Detail() string {
 	return string(b)
 }
 
-// ErrorText textplain of the error
-func (e *err) ErrorText() string {
+// DetailText textplain of the error
+func (e *err) DetailText() string {
 	var text string
 	if e.chains != nil && len(e.chains) != 0 {
 		text = fmt.Sprintf("CallChains=%s, ", strings.Join(e.chains, "."))
@@ -113,11 +117,11 @@ func (e *err) ErrorText() string {
 	if len(e.tag) != 0 {
 		text += fmt.Sprintf("Tag=%s, ", e.tag)
 	}
-	if globalFields != nil {
+	if globalFields != nil && len(globalFields) != 0 {
 		b, _ := json.Marshal(globalFields)
 		text += fmt.Sprintf("GlobalFields=%s, ", b)
 	}
-	if e.fields != nil {
+	if e.fields != nil && len(e.fields) != 0 {
 		b, _ := json.Marshal(e.fields)
 		text += fmt.Sprintf("Fields=%s, ", b)
 	}
