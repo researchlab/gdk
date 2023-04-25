@@ -51,6 +51,9 @@ type (
 	// function provides one input argument and one return
 	Func[R, T any] func(T) R
 
+	// TFunc provides one input and two return
+	TFunc[E, R, T any] func(E) (R, T)
+
 	// two-arity specialization of function
 	BiFunc[R, T, U any] func(T, U) R
 

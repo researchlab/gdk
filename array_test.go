@@ -1,6 +1,7 @@
 package gdk
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -174,4 +175,69 @@ func TestArrayMin(t *testing.T) {
 			t.Errorf("got %v, want 0", got)
 		}
 	})
+}
+
+type stu struct {
+	name  string
+	alias string
+}
+
+func (s *stu) Name() string {
+	return s.name
+}
+func TestArrayMap(t *testing.T) {
+	t.Run("mapping basic array to a map", func(t *testing.T) {
+		a := []int{1, 2, 3}
+		got := ArrayMap(a, func(i int) (int, struct{}) {
+			return i, struct{}{}
+		})
+		for _, v := range a {
+			if vv, ok := got[v]; !ok {
+				t.Errorf("got false,  want true, v %v", v)
+			} else if vv != struct{}{} {
+				t.Errorf("got %v, want struct{}{}", vv)
+			}
+		}
+	})
+
+	stus := []stu{
+		stu{"mike", "mike"},
+		stu{"jack", "jack"},
+	}
+	t.Run("mapping struct array to a map", func(t *testing.T) {
+		got := ArrayMap(stus, func(s stu) (r string, t stu) {
+			return s.name, s
+		})
+		for _, s := range stus {
+			v, ok := got[s.name]
+			if !ok {
+				t.Errorf("got %v, want %v", v, s)
+			}
+			if v.name != v.alias {
+				t.Errorf("map value invalid, got %v", v)
+			}
+		}
+	})
+	t.Run("mapping struct array to a map", func(t *testing.T) {
+		got := ArrayMap(stus, func(s stu) (r string, t *stu) {
+			return s.name, &s
+		})
+		for _, s := range stus {
+			v, ok := got[s.name]
+			if !ok {
+				t.Errorf("got %v, want %v", *v, s)
+			}
+			// 注意是(*v).name 不是*v.name, 也不是v.name
+			t.Log(fmt.Printf("%T, %v, %v, %s", v, v, *v, (*v).name))
+			t.Log("name=", v.Name(), " name=", (*v).Name())
+
+			//if *v.name != *v.alias {
+			//	t.Errorf("map value invalid, got %v", *v)
+			//}
+			if reflect.TypeOf(v).Kind() != reflect.Pointer {
+				t.Errorf("got %v, want pointer", reflect.TypeOf(v))
+			}
+		}
+	})
+
 }
