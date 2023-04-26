@@ -24,15 +24,40 @@ var (
 	globalErrorTemplates map[any]string
 )
 
+const (
+	GTAG            = "globalTag"
+	GFIELDS         = "globalFields"
+	GERRORTEMPLATES = "globalErrorTemplates"
+)
+
 func init() {
 	globalFields = make(map[string]interface{})
 	globalErrorTemplates = make(map[any]string)
 }
 
+func UnsetGlobals(options ...string) {
+	if len(options) != 0 {
+		for _, v := range options {
+			switch v {
+			case GTAG:
+				globalTag = ""
+			case GFIELDS:
+				globalFields = make(map[string]interface{})
+			case GERRORTEMPLATES:
+				globalErrorTemplates = make(map[any]string)
+			default:
+			}
+		}
+		return
+	}
+	globalFields = make(map[string]interface{})
+	globalErrorTemplates = make(map[any]string)
+	globalTag = ""
+}
+
 // SetGlobalErrorTemplates cache error templates
 // 建议做多设置一次
 func SetGlobalErrorTemplates(templates map[any]string) {
-	globalErrorTemplates = make(map[any]string)
 	for k, v := range templates {
 		globalErrorTemplates[k] = v
 	}
@@ -46,7 +71,6 @@ func SetGlobalTag(tag string) {
 // SetGlobalFields global fields, set at most once
 // 建议最多设置一次
 func SetGlobalFields(fields map[string]interface{}) {
-	globalFields = make(map[string]interface{})
 	for k, v := range fields {
 		globalFields[k] = v
 	}
