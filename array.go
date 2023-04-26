@@ -73,8 +73,8 @@ func ArrayMin[E Ordered](array ...E) E {
 	return min
 }
 
-// ArrayMap mapping the given array to a map[r]t
-func ArrayMap[E, R, T any](array []E, f TFunc[E, R, T]) (out map[any]T) {
+// ArrayToMap mapping the given array to a map[r]t
+func ArrayToMap[E, R, T any](array []E, f TFunc[E, R, T]) (out map[any]T) {
 	out = make(map[any]T)
 	for _, v := range array {
 		r, t := f(v)

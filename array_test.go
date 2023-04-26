@@ -185,10 +185,10 @@ type stu struct {
 func (s *stu) Name() string {
 	return s.name
 }
-func TestArrayMap(t *testing.T) {
+func TestArrayToMap(t *testing.T) {
 	t.Run("mapping basic array to a map", func(t *testing.T) {
 		a := []int{1, 2, 3}
-		got := ArrayMap(a, func(i int) (int, struct{}) {
+		got := ArrayToMap(a, func(i int) (int, struct{}) {
 			return i, struct{}{}
 		})
 		for _, v := range a {
@@ -205,7 +205,7 @@ func TestArrayMap(t *testing.T) {
 		stu{"jack", "jack"},
 	}
 	t.Run("mapping struct array to a map", func(t *testing.T) {
-		got := ArrayMap(stus, func(s stu) (r string, t stu) {
+		got := ArrayToMap(stus, func(s stu) (r string, t stu) {
 			return s.name, s
 		})
 		for _, s := range stus {
@@ -219,7 +219,7 @@ func TestArrayMap(t *testing.T) {
 		}
 	})
 	t.Run("mapping struct array to a map", func(t *testing.T) {
-		got := ArrayMap(stus, func(s stu) (r string, t *stu) {
+		got := ArrayToMap(stus, func(s stu) (r string, t *stu) {
 			return s.name, &s
 		})
 		for _, s := range stus {
