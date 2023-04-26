@@ -62,9 +62,9 @@ func ExampleErrorT() {
 	gdk.SetGlobalFields(map[string]interface{}{
 		"service": "timer-job-3",
 	})
-
+	defer gdk.UnsetGlobals()
 	err := gdk.ErrorT(ERR_PARAMS_INVALID, "size need > 5, code need > 0")
 	fmt.Println(err.DetailText())
 	// Output:
-	// CallChains=ExampleErrorT, GlobalFields={"service":"timer-job-3"}, Code=PARAMS INVALID, Error=params invalid, include(size need > 5, code need > 0)
+	// CallChains=ExampleErrorT, GlobalTag=ip:192.168.190.70, GlobalFields={"service":"timer-job-3"}, Code=PARAMS INVALID, Error=params invalid, include(size need > 5, code need > 0)
 }

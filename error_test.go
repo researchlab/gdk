@@ -75,6 +75,7 @@ func TestWithTag(t *testing.T) {
 
 	t.Run("Global Tag", func(t *testing.T) {
 		SetGlobalTag("globalGDK")
+		defer UnsetGlobals()
 		err := ErrorCause(fmt.Errorf("error")).WithTag("gdk").Export()
 		if err.Tag != "gdk" && err.GlobalTag != "globalGDK" {
 			t.Errorf("got tag=%v, globalTag=%v, want tag=gdk, globalTag=globalGDK", err.Tag, err.GlobalTag)
@@ -102,6 +103,7 @@ func TestWithFields(t *testing.T) {
 	})
 	t.Run("GlobalFields", func(t *testing.T) {
 		SetGlobalFields(globalFields)
+		defer UnsetGlobals()
 		err := ErrorCause(fmt.Errorf("error")).WithFields(fields).Export()
 		if !reflect.DeepEqual(err.Fields, fields) {
 			t.Errorf("got %v, want %v", err.Fields, fields)
@@ -280,8 +282,9 @@ func TestDetailText(t *testing.T) {
 	_, e := json.Marshal(func() {})
 	SetGlobalTag("ip:192.168.1.12")
 	SetGlobalFields(map[string]interface{}{"build": 20231121})
+	defer UnsetGlobals()
 	err := ErrorCause(e).WithCode(ERR_PARSE_FAILED).WithTag("FunctionMarshal").WithFields(map[string]interface{}{"key": "value"})
-	want := `CallChains=TestDetailText, Tag=FunctionMarshal, GlobalFields={"build":20231121}, Fields={"key":"value"}, Code=PARSE_FAILED, Error=json: unsupported type: func() `
+	want := `CallChains=TestDetailText, GlobalTag=ip:192.168.1.12, Tag=FunctionMarshal, GlobalFields={"build":20231121}, Fields={"key":"value"}, Code=PARSE_FAILED, Error=json: unsupported type: func() `
 	if err.DetailText() != want {
 		t.Errorf("got %v, want %v", err.DetailText(), want)
 	}
