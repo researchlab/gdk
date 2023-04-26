@@ -25,9 +25,9 @@ var (
 )
 
 const (
-	GTAG            = "globalTag"
-	GFIELDS         = "globalFields"
-	GERRORTEMPLATES = "globalErrorTemplates"
+	G_TAG             = "globalTag"
+	G_FIELDS          = "globalFields"
+	G_ERROR_TEMPLATES = "globalErrorTemplates"
 )
 
 func init() {
@@ -39,11 +39,11 @@ func UnsetGlobals(options ...string) {
 	if len(options) != 0 {
 		for _, v := range options {
 			switch v {
-			case GTAG:
+			case G_TAG:
 				globalTag = ""
-			case GFIELDS:
+			case G_FIELDS:
 				globalFields = make(map[string]interface{})
-			case GERRORTEMPLATES:
+			case G_ERROR_TEMPLATES:
 				globalErrorTemplates = make(map[any]string)
 			default:
 			}
