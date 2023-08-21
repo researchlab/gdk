@@ -1,3 +1,4 @@
+// log context, tracing the same request business log by the same log id
 package gdk
 
 import (
